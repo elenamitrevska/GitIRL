@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow');
+
+.post-title {
+  font-size: 0px;
+}
+
+.widget_ct_mission_news_post_list .title:link {
+  font-family: "PT Sans Narrow", sans-serif;
+  font-style: normal;
+}
+
+.layout-container {
+  font-family: "PT Sans", sans-serif;
+  text-decoration: none;
+  border-width: 0px;
+  background-color: #ffffff;
+  padding-top: 25px;
+  margin-top: -16px;
+}
+
+.menu-primary-items a:link {
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  font-variant: small-caps;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.site-header .date {
+  color: #ffffff;
+}
+
+.search-toggle span {
+  color: #ffffff;
+}
+
+.fa.fa-search {
+  color: #ffffff;
+}
+
+.menu-secondary-items li.current-menu-item > a {
+  color: #ffffff;
+}
+
+.menu-secondary-items a:hover {
+  color: #ffffff;
+  background-color: #ffffff;
+}
+
+.menu-primary-items a:hover {
+  background-color: #a80f26;
+  color: #ffffff;
+}
+
+.menu-primary-items a {
+  color: #e2e2e2 !important;
+  font-family: "PT Sans", sans-serif;
+}
+
+.overflow-container {
+  background-color: #262626;
+}
+
+#site-header.site-header {
+  background-color: #262626;
+}
+
+.menu-primary-items a:link,
+.menu-primary-items a:visited,
+.menu-unset ul a:link,
+.menu-unset ul a:visited {
+  color: #ffffff;
+}
+
+.menu-primary-items li.current-menu-item > a {
+  background: #a80f26;
+}
+
+.menu-primary-items li.current-menu-ancestor > a {
+  background: #a80f26;
+}
+
+.menu-primary-container {
+  border-top: solid 2px #b4b4b4;
+  border-bottom: solid 0px #b4b4b4;
+  background: #262626;
+}
+
+.menu-secondary-items a:visited {
+  color: #ffffff;
+}
+
+.menu-secondary-items a:hover {
+  color: whitesmoke;
+  background-color: #262626;
+  font-weight: bold;
+}
+
+.menu-secondary-items li.current-menu-item > a {
+  text-decoration: underline;
+  color: whitesmoke;
+  background-color: #262626;
+  font-weight: bold;
+}
+
+body {
+  font-family: "PT Sans", sans-serif;
+}
+
+.menu-primary-items li.menu-item-has-children > a::after,
+.menu-unset ul li.menu-item-has-children > a::after {
+  content: '\f12e';
+  font-family: "FontAwesome";
+  position: relative;
+  margin-left: 6px;
+  line-height: 1;
+  top: 1px;
+  color: #d52323;
+}
+
+.menu-primary-items ul li {
+  background-color: #262626 !important;
+}
