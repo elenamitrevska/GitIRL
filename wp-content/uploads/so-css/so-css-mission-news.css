@@ -121,3 +121,56 @@ body {
 .menu-primary-items ul li {
   background-color: #262626 !important;
 }
+
+.site-footer {
+  background: #262626 !important;
+}
+
+  .site-header .social-media-icons a {
+    color: #000;
+  }
+  .site-header .social-media-icons a:link, .site-header .social-media-icons a:visited {
+    color: #fff;
+  }
+  .site-header .social-media-icons a:hover, .site-header .social-media-icons a:active, .site-header .social-media-icons a:focus {
+    color: #ae0606;
+  }
+
+
+
+.site-footer .design-credit a:link, .site-footer .design-credit a:visited {
+  color: #e2e2e2;
+}
+
+.tagline {
+    width: 100%;
+    max-width: 400px;
+    font-size: 1em;
+    line-height: 1.5;
+    font-style: normal;
+    color: #e2e2e2;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    font-family: "PT Sans", sans-serif;
+    text-align: center;
+    display: inline-block;
+  }
+.menu-secondary-container {
+    display: block;
+    float: right;
+  text-align: left; 
+}
+
+.site-header .social-media-icons {
+    float: left;
+}
+
+.menu-secondary-items a:link, .menu-secondary-items a:visited {
+  color: whitesmoke !important;
+}
+
+  .social-media-icons a {
+line-height: 20px;
+
+    border: solid 1px #fff;
+  }

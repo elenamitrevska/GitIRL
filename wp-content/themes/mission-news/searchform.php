@@ -5,3 +5,5 @@
         <input type="submit" class="search-submit" value='<?php esc_attr_e( 'Пребарај', 'mission-news' ); ?>'/>
     </form>
 </div>
+
+

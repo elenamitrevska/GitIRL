@@ -26,5 +26,4 @@ $date   = get_theme_mod( 'post_date_posts' );
 		</div>
 		<?php get_template_part( 'content/more-from-category' ); ?>
 	</article>
-	<?php comments_template(); ?>
 </div>

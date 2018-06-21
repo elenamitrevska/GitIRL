@@ -16,7 +16,7 @@ if ( ! function_exists( ( 'ct_mission_news_customize_comments' ) ) ) {
 					<?php
 					global $post;
 					if ( $comment->user_id === $post->post_author && get_theme_mod( 'author_label' ) != 'no' ) {
-						echo '<span>' . esc_html__( 'Post author', 'mission-news' ) . '</span>';
+						echo '<span>' . esc_html__( 'Автор', 'mission-news' ) . '</span>';
 						if ( get_theme_mod( 'comment_date' ) != 'no' ) {
 							echo ' | ';
 						}
@@ -29,18 +29,18 @@ if ( ! function_exists( ( 'ct_mission_news_customize_comments' ) ) ) {
 			</div>
 			<div class="comment-content">
 				<?php if ( $comment->comment_approved == '0' ) : ?>
-					<em><?php esc_html_e( 'Your comment is awaiting moderation.', 'mission-news' ) ?></em>
+					<em><?php esc_html_e( 'Вашиот коментар чека модерирање.', 'mission-news' ) ?></em>
 					<br/>
 				<?php endif; ?>
 				<?php comment_text(); ?>
 			</div>
 			<div class="comment-footer">
 				<?php comment_reply_link( array_merge( $args, array(
-					'reply_text' => esc_html__( 'Reply', 'mission-news' ),
+					'reply_text' => esc_html__( 'Одговор', 'mission-news' ),
 					'depth'      => $depth,
 					'max_depth'  => $args['max_depth']
 				) ) ); ?>
-				<?php edit_comment_link( esc_html__( 'Edit', 'mission-news' ) ); ?>
+				<?php edit_comment_link( esc_html__( 'Уреди', 'mission-news' ) ); ?>
 			</div>
 		</article>
 		<?php
