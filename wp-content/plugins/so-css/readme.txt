@@ -2,8 +2,8 @@
 Tags: css, design, edit, customize
 Requires at least: 3.9
 Tested up to: 4.9
-Stable tag: 1.2.2
-Build time: 2018-06-16T14:41:39+02:00
+Stable tag: 1.2.3
+Build time: 2018-06-25T09:47:44+02:00
 License: GPLv2 or later
 Contributors: gpriday
 Donate link: https://siteorigin.com/downloads/contribution/
@@ -64,6 +64,10 @@ We're actively developing SiteOrigin CSS. Keep track of what's happening over on
 We offer free support on the [SiteOrigin support forums](https://siteorigin.com/thread/).
 
 == Changelog ==
+
+= 1.2.3 - 25 June 2018 =
+* Add preview iframe 'load' event listener in `render` function.
+* Reverted change to stylesheet hook.
 
 = 1.2.2 - 16 June 2018 =
 * Removed reference to non-existent view.

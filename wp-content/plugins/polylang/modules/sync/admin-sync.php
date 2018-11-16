@@ -29,6 +29,8 @@ class PLL_Admin_Sync {
 		add_action( 'pll_save_post', array( $this, 'pll_save_post' ), 10, 3 );
 		add_action( 'pll_save_term', array( $this, 'sync_term_parent' ), 10, 3 );
 
+		add_action( 'pll_duplicate_term', array( $this->term_metas, 'copy' ), 10, 3 );
+
 		if ( $this->options['media_support'] ) {
 			add_action( 'pll_translate_media', array( $this->taxonomies, 'copy' ), 10, 3 );
 			add_action( 'pll_translate_media', array( $this->post_metas, 'copy' ), 10, 3 );
@@ -191,9 +193,7 @@ class PLL_Admin_Sync {
 			$term = get_term( $term_id );
 
 			foreach ( $translations as $lang => $tr_id ) {
-				if ( ! empty( $tr_id ) && $tr_id !== $term_id ) {
-					$tr_parent = $this->model->term->get_translation( $term->parent, $lang );
-
+				if ( ! empty( $tr_id ) && $tr_id !== $term_id && $tr_parent = $this->model->term->get_translation( $term->parent, $lang ) ) {
 					$wpdb->update(
 						$wpdb->term_taxonomy,
 						array( 'parent' => isset( $tr_parent ) ? $tr_parent : 0 ),

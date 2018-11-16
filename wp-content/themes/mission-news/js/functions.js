@@ -15,7 +15,7 @@ jQuery(document).ready(function($){
     /* Object fit cross-browser support */
     
     objectFitAdjustment();
-    $(window).resize(function(){
+    $(window).on( 'resize', function(){
         objectFitAdjustment();
         adjustMenuTopPosition();
     });
@@ -54,7 +54,7 @@ jQuery(document).ready(function($){
             $(this).attr('aria-expanded', 'false');
 
             // allow scrolling again
-            body.off('scroll mousewheel touchmove', stopScrolling);
+            body.css('overflow', 'auto');
 
         } else {
             menuPrimaryContainer.addClass('open');
@@ -66,16 +66,9 @@ jQuery(document).ready(function($){
             // change aria text
             $(this).attr('aria-expanded', 'true');
 
-            /* can't use overflow: hidden; b/c IE (Windows) will then remove the scrollbar
-             shifting the whole site over to the right. Also, theme check thinks Mission News is "hiding" wpadminbar */
-            body.on('scroll mousewheel touchmove', stopScrolling);
+            // prevent scrolling entire site when bottom of menu is reached
+            body.css('overflow', 'hidden');
         }
-    }
-
-    function stopScrolling(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
     }
 
     // adjust mobile menu "top" value to line up correctly in case user has extra-tall header (rare)
@@ -89,10 +82,18 @@ jQuery(document).ready(function($){
                     newHeight += 32;
                 }
             }
+            if (body.hasClass('news-ticker') && body.hasClass('news-ticker-top') && !body.hasClass('news-ticker-mobile-disabled')) {
+                newHeight += 36;
+            }
+            if (body.hasClass('header-image-active')) {
+                newHeight += $('#header-image').outerHeight();
+            }
             menuPrimaryContainer.css('top', newHeight + 'px');
+        } else {
+            menuPrimaryContainer.css('top', 'auto');
         }
     }
-    $(window).load(function () {
+    $(window).on( 'load', function () {
         adjustMenuTopPosition();
     });
 
@@ -151,7 +152,7 @@ jQuery(document).ready(function($){
         }
     }
     moveSecondaryMenu();
-    $(window).resize(function(){
+    $(window).on( 'resize', function(){
 
         if ( window.innerWidth > 800 ) {
 
@@ -187,7 +188,7 @@ jQuery(document).ready(function($){
             siteHeader.find('.search-field').attr('tabindex', -1);
 
             // allow scrolling again
-            body.off('scroll mousewheel touchmove', stopScrolling);
+            body.css('overflow', 'auto');
         } else {
             body.addClass('display-search');
             // make search input keyboard accessible
@@ -197,9 +198,8 @@ jQuery(document).ready(function($){
                 $('#search-form-popup').find('#search-field').focus();
             }, 250);
 
-            /* can't use overflow: hidden; b/c IE (Windows) will then remove the scrollbar
-            shifting the whole site over to the right. Also, theme check thinks Mission News is "hiding" wpadminbar */
-            body.on('scroll mousewheel touchmove', stopScrolling);
+            // prevent background scrolling
+            body.css('overflow', 'hidden');
         }
     }
 

@@ -77,7 +77,7 @@ Here are a few quick guides on how to build some popular types of forms with our
 * [PDF notifications](http://www.captainform.com/docs/pdf-notifications/)
 * [SMS notifications](http://www.captainform.com/docs/sms-notifications)
 * [Multilanguage forms](http://www.captainform.com/docs/translations/)
-* Integration with [Google Drive](http://www.captainform.com/docs/google-drive/), [Dropbox](http://www.captainform.com/docs/dropbox/), [WordPress Posts](http://www.captainform.com/docs/how-to-create-wordpress-posts-through-form-submissions/), [Google Groups](http://www.captainform.com/docs/google-groups) and [Yahoo Groups](http://www.captainform.com/docs/yahoo-groups)
+* Integration with [Google Drive](http://www.captainform.com/docs/google-drive/), [Dropbox](http://www.captainform.com/docs/dropbox/), [WordPress Posts](http://www.captainform.com/docs/how-to-create-wordpress-posts-through-form-submissions/) and [Google Groups](http://www.captainform.com/docs/google-groups)
 * Allow users to [save and resume a submission](http://www.captainform.com/docs/can-users-save-and-resume-a-form-submission)
 * Allow users to [preview a submission](http://www.captainform.com/docs/can-users-preview-the-submission-summary-before-sending-the-form)
 * Allow users to [print a submission](http://www.captainform.com/docs/can-i-add-a-print-button-to-my-form/)
@@ -344,8 +344,6 @@ All add-ons are available straight from the core plugin, so that you don't need 
 
 **Google Groups** - Add new members to your [Google Groups](http://www.captainform.com/docs/google-groups).
 
-**Yahoo Groups** - Add new members to your [Yahoo Groups](http://www.captainform.com/docs/yahoo-groups).
-
 = WordPress specific apps =
 
 **WordPress Posts** - Create [user-generated WordPress posts](http://www.captainform.com/docs/how-to-create-wordpress-posts-through-form-submissions/) when a form submission is sent. You can configure the post in different ways: set its status on published, pending or draft; customize its content, excerpt and author; use custom posts etc.
@@ -481,6 +479,9 @@ We support MasterCard, Visa, PayPal, American Express, JCB, Discover/Novus and D
 To downgrade the plugin, click on the Downgrade button under our Regular plan and fill out the cancellation form. All premium features will be deactivated, but you can upgrade again at any time by purchasing a new license key.
 
 == Changelog ==
+= 2.2.7 (17 September 2018) =
+* Optimized HTML
+
 = 2.2.6 (22 August 2017) =
 * Fixed conflict with the color picker in Avada theme v5.2.1
 

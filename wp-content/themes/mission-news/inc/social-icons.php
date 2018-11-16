@@ -20,6 +20,7 @@ if ( ! function_exists( 'ct_mission_news_social_array' ) ) {
 			'amazon'        => 'ct_mission_news_amazon_profile',
 			'bandcamp'      => 'ct_mission_news_bandcamp_profile',
 			'behance'       => 'ct_mission_news_behance_profile',
+			'bitbucket'     => 'ct_mission_news_bitbucket_profile',
 			'codepen'       => 'ct_mission_news_codepen_profile',
 			'delicious'     => 'ct_mission_news_delicious_profile',
 			'deviantart'    => 'ct_mission_news_deviantart_profile',
@@ -32,6 +33,7 @@ if ( ! function_exists( 'ct_mission_news_social_array' ) ) {
 			'google-wallet' => 'ct_mission_news_google_wallet_profile',
 			'hacker-news'   => 'ct_mission_news_hacker-news_profile',
 			'meetup'        => 'ct_mission_news_meetup_profile',
+			'ok-ru'         => 'ct_mission_news_ok_ru_profile',
 			'paypal'        => 'ct_mission_news_paypal_profile',
 			'podcast'       => 'ct_mission_news_podcast_profile',
 			'quora'         => 'ct_mission_news_quora_profile',
@@ -91,12 +93,18 @@ if ( ! function_exists( 'ct_mission_news_social_icons_output' ) ) {
 
 		if ( ! empty( $active_sites ) ) {
 
-			echo "<ul id='social-media-icons' class='social-media-icons'>";
+			if ( $source == 'header' ) {
+				echo "<ul id='social-media-icons' class='social-media-icons'>";
+			} else {
+				echo "<ul class='social-media-icons'>";
+			}
 
 			foreach ( $active_sites as $key => $active_site ) {
 
 				if ( $active_site == 'email-form' ) {
 					$class = 'fa fa-envelope-o';
+				} elseif ( $active_site == 'ok-ru' ) {
+					$class = 'fa fa-odnoklassniki';
 				} else {
 					$class = 'fa fa-' . $active_site;
 				}

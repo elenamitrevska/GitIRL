@@ -1,9 +1,6 @@
 ( function( $ ) {
 
-    var panel = $('html', window.parent.document);
-    var body = $('body');
-    var siteTitle = $('#site-title');
-    var tagline = $( '.tagline' );
+    var siteTitle = $('.site-title');
 
     // Site title
     wp.customize( 'blogname', function( value ) {
@@ -25,9 +22,4 @@
             tagline.text( to );
         } );
     } );
-
-    /* prevent logo's selective refresh from acting b/c has_custom_logo() will always be true,
-     so the site title cannot return */
-    $('.custom-logo-link').removeClass('custom-logo-link');
-
 } )( jQuery );

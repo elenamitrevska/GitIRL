@@ -8,12 +8,13 @@
 <footer id="site-footer" class="site-footer" role="contentinfo">
     <?php do_action( 'ct_mission_news_footer_top' ); ?>
     <div class="footer-title-container">
-        
+
         <?php if ( get_bloginfo( 'description' ) && get_theme_mod( 'tagline_footer' ) != 'no' ) {
             echo '<p class="footer-tagline">' . esc_html( get_bloginfo( 'description' ) ) . '</p>';
         } ?>
         <?php ct_mission_news_social_icons_output( 'footer' ); ?>
     </div>
+    <?php get_sidebar( 'site-footer' ); ?>
     <div class="design-credit">
         <span>
             <?php

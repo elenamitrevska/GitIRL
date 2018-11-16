@@ -16,7 +16,7 @@
  * Plugin Name:       CaptainForm
  * Plugin URI:        http://captainform.com
  * Description:       CaptainForm is a fully-featured WordPress form plugin created for web designers, developers, and also for non-tech savvy users.
- * Version:           2.2.6
+ * Version:           2.2.7
  * Author:            captainform
  * Author URI:        https://profiles.wordpress.org/captainform
  * License:           GPL-2.0+

@@ -7,7 +7,8 @@ require_once( trailingslashit( get_template_directory() ) . 'theme-options.php' 
 require_once( trailingslashit( get_template_directory() ) . 'inc/widgets/post-list.php' );
 require_once( trailingslashit( get_template_directory() ) . 'inc/comments.php' );
 require_once( trailingslashit( get_template_directory() ) . 'inc/customizer.php' );
-require_once( trailingslashit( get_template_directory() ) . 'inc/meta-box.php' );
+require_once( trailingslashit( get_template_directory() ) . 'inc/meta-box-layout.php' );
+require_once( trailingslashit( get_template_directory() ) . 'inc/meta-box-fi-display.php' );
 require_once( trailingslashit( get_template_directory() ) . 'inc/review.php' );
 require_once( trailingslashit( get_template_directory() ) . 'inc/scripts.php' );
 require_once( trailingslashit( get_template_directory() ) . 'inc/social-icons.php' );
@@ -61,6 +62,11 @@ if ( ! function_exists( ( 'ct_mission_news_theme_setup' ) ) ) {
 			'flex-height' => true,
 			'flex-width'  => true
 		) );
+		add_theme_support( 'woocommerce' );
+		// support WooCommerce image gallery features
+		add_theme_support( 'wc-product-gallery-zoom' );
+		add_theme_support( 'wc-product-gallery-lightbox' );
+		add_theme_support( 'wc-product-gallery-slider' );
 
 		register_nav_menus( array(
 			'primary'   => esc_html__( 'Primary', 'mission-news' ),
@@ -141,19 +147,33 @@ if ( ! function_exists( ( 'ct_mission_news_register_widget_areas' ) ) ) {
 			'before_title'  => '<h2 class="widget-title">',
 			'after_title'   => '</h2>'
 		) );
+		register_sidebar( array(
+			'name'          => esc_html__( 'Footer', 'mission-news' ),
+			'id'            => 'site-footer',
+			'description'   => esc_html__( 'Widgets in this area will be shown in the footer.', 'mission-news' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>'
+		) );
 	}
 }
 add_action( 'widgets_init', 'ct_mission_news_register_widget_areas' );
 
 //----------------------------------------------------------------------------------
 //	Output excerpt/content
+//  Can't return the_content() so need to use get_the_content()
+//  Apply same filter and str_replace() as the_content(): https://developer.wordpress.org/reference/functions/the_content/
 //----------------------------------------------------------------------------------
 if ( ! function_exists( 'ct_mission_news_excerpt' ) ) {
 	function ct_mission_news_excerpt() {
-		if ( get_theme_mod( 'full_post' ) == 'yes' ) {
-			return wpautop( get_the_content() );
+		if ( get_theme_mod( 'full_post' ) == 'yes' ) {		
+			$content = get_the_content();
+			$content = apply_filters( 'the_content', $content );
+			$content = str_replace( ']]>', ']]&gt;', $content );
+			return $content;
 		} else {
-			return wpautop( get_the_excerpt() );
+			return wpautop( wp_kses_post( get_the_excerpt() ) );
 		}
 	}
 }
@@ -209,11 +229,13 @@ add_filter( 'the_content_more_link', 'ct_mission_news_remove_more_link_scroll' )
 //----------------------------------------------------------------------------------
 if ( ! function_exists( 'ct_mission_news_featured_image' ) ) {
 	function ct_mission_news_featured_image() {
+		$blog_display = apply_filters( 'ct_mission_news_featured_image_display_filter', get_theme_mod( 'featured_image_blog_archives' ) );
+		$post_display = apply_filters( 'ct_mission_news_featured_image_display_filter', get_theme_mod( 'featured_image_posts' ) );
 
 		// don't output on archives or post pages when turned off via Customizer setting
 		if (
-			( (  is_home() || is_archive() || is_search() ) && get_theme_mod( 'featured_image_blog_archives' ) == 'no' )
-			|| ( is_singular( 'post' ) && get_theme_mod( 'featured_image_posts' ) == 'no' )
+			( (  is_home() || is_archive() || is_search() ) && ($blog_display == 'post' || $blog_display == 'no') )
+			|| ( is_singular( 'post' ) && ($post_display == 'blog' || $post_display == 'no' ) )
 		) {
 			return;
 		}
@@ -374,18 +396,54 @@ if ( ! function_exists( ( 'ct_mission_news_body_class' ) ) ) {
 	function ct_mission_news_body_class( $classes ) {
 
 		global $post;
-		$full_post   = get_theme_mod( 'full_post' );
-		$layout      = get_theme_mod( 'layout' );
-		$layout_post = apply_filters( 'ct_mission_news_layout_filter', get_theme_mod( 'layout_posts' ) );
+		$full_post   		 				= get_theme_mod( 'full_post' );
+		$layout      		 				= get_theme_mod( 'layout' );
+		$layout_post 		 				= apply_filters( 'ct_mission_news_layout_filter', get_theme_mod( 'layout_posts' ) );
+		$layout_page 		 				= apply_filters( 'ct_mission_news_layout_filter', get_theme_mod( 'layout_pages' ) );
+		$layout_archives 				= get_theme_mod( 'layout_archives' );
+		$layout_blog 			  		= get_theme_mod( 'layout_blog' );
+		$layout_search 			  	= get_theme_mod( 'layout_search' );
+		$layout_bbpress  				= get_theme_mod( 'layout_bbpress' );
+		$layout_woocommerce 		= get_theme_mod( 'layout_woocommerce' );
+		$layout_woocommerce_cat = get_theme_mod( 'layout_woocommerce_cat' );
 
+		if ( !function_exists('is_bbpress') ) {
+			function is_bbpress() {
+				return false;
+			}
+		}
+		if ( !function_exists('is_product') ) {
+			function is_product() {
+				return false;
+			}
+			function is_product_category() {
+				return false;
+			}
+			function is_shop() {
+				return false;
+			}
+		}
 		if ( $full_post == 'yes' ) {
 			$classes[] = 'full-post';
-		} if ( !empty( $layout ) ) {
+		} if ( !empty( $layout ) && !is_product_category() && !is_shop() ) {
 			$classes[] = 'layout-' . esc_attr( $layout );
-		} if ( !empty( $layout_post ) ) {
-			$classes[] = 'layout-post-' . esc_attr( $layout_post );
+		} if ( !empty( $layout_post ) && is_singular('post') && !is_bbpress() ) {
+			$classes[] = 'layout-' . esc_attr( $layout_post );
+		} if ( !empty( $layout_page ) && is_singular('page') && !is_bbpress() ) {
+			$classes[] = 'layout-' . esc_attr( $layout_page );
+		} if ( !empty( $layout_archives ) && is_archive() && !is_bbpress() && !is_product_category() && !is_shop() ) {
+			$classes[] = 'layout-' . esc_attr( $layout_archives );
+		} if ( !empty( $layout_blog ) && is_home() ) {
+			$classes[] = 'layout-' . esc_attr( $layout_blog );
+		} if ( !empty( $layout_search ) && is_search() ) {
+			$classes[] = 'layout-' . esc_attr( $layout_search );
+		} if ( !empty( $layout_bbpress ) && is_bbpress() ) {
+			$classes[] = 'layout-' . esc_attr( $layout_bbpress );
+		} if ( !empty( $layout_woocommerce ) && is_product() ) {
+			$classes[] = 'layout-' . esc_attr( $layout_woocommerce );
+		} if ( !empty( $layout_woocommerce_cat ) && ( is_product_category() || is_shop() ) ) {
+			$classes[] = 'layout-' . esc_attr( $layout_woocommerce_cat );
 		}
-
 		return $classes;
 	}
 }
@@ -455,7 +513,23 @@ if ( ! function_exists( ( 'ct_mission_news_infinite_scroll_render' ) ) ) {
 	function ct_mission_news_infinite_scroll_render() {
 		while ( have_posts() ) {
 			the_post();
-			get_template_part( 'content', 'archive' );
+			global $wp_query;
+			$layout = get_theme_mod( 'layout' );
+
+			if ( $wp_query->current_post == 0 ) {
+				if ( $layout == 'double' || $layout == 'rows' || $layout == 'rows-excerpt' ) {
+					get_template_part( 'content-archive', get_post_type() );
+				} else {
+					get_template_part( 'content-archive', $layout );
+				}
+			} else {
+				if ( $layout == 'simple' ) {
+					get_template_part( 'content-archive', get_post_type() );
+				} else {
+					get_template_part( 'content-archive', $layout );
+				}
+			}
+			
 		}
 	}
 }
@@ -540,7 +614,7 @@ if ( ! function_exists( ( 'ct_mission_news_post_byline' ) ) ) {
 			global $post;
 			$post_author = get_the_author_meta( 'display_name', $post->post_author );
 		}
-		$post_date = date_i18n( get_option( 'date_format' ), strtotime( get_the_date() ) );
+		$post_date = date_i18n( get_option( 'date_format' ), strtotime( get_the_date('r') ) );
 
 		echo '<div class="post-byline">';
 		if ( $author == 'no' ) {
@@ -578,12 +652,12 @@ add_filter( 'the_title', 'ct_mission_news_no_missing_titles', 10, 2 );
 if ( ! function_exists( ( 'ct_mission_news_filter_layout' ) ) ) {
 	function ct_mission_news_filter_layout( $layout ) {
 
-		if ( is_singular( 'post' ) ) {
+		if ( is_singular( 'post' ) || is_singular( 'page' ) ) {
 			global $post;
-			$post_layout = get_post_meta( $post->ID, 'ct_mission_news_post_layout_key', true );
+			$single_layout = get_post_meta( $post->ID, 'ct_mission_news_post_layout_key', true );
 
-			if ( ! empty( $post_layout ) && $post_layout != 'default' ) {
-				$layout = $post_layout;
+			if ( ! empty( $single_layout ) && $single_layout != 'default' ) {
+				$layout = $single_layout;
 			}
 		}
 
@@ -592,3 +666,177 @@ if ( ! function_exists( ( 'ct_mission_news_filter_layout' ) ) ) {
 }
 add_filter( 'ct_mission_news_layout_filter', 'ct_mission_news_filter_layout' );
 
+//----------------------------------------------------------------------------------
+// Allow individual posts to override the global Featured Image display setting
+//----------------------------------------------------------------------------------
+if ( ! function_exists( ( 'ct_mission_news_filter_featured_image_display' ) ) ) {
+	function ct_mission_news_filter_featured_image_display( $display ) {
+
+			global $post;
+			$single_display = get_post_meta( $post->ID, 'ct_mission_news_featured_image_display', true );
+
+			if ( ! empty( $single_display ) && $single_display != 'default' ) {
+				$display = $single_display;
+			}
+
+		return $display;
+	}
+}
+add_filter( 'ct_mission_news_featured_image_display_filter', 'ct_mission_news_filter_featured_image_display' );
+
+//----------------------------------------------------------------------------------
+// Allows site title to display in Customizer preview when logo is removed
+//----------------------------------------------------------------------------------
+if ( ! function_exists( ( 'ct_mission_news_logo_refresh' ) ) ) {
+	function ct_mission_news_logo_refresh($wp_customize) {
+		$wp_customize->get_setting( 'custom_logo' )->transport = 'refresh';
+	}
+}
+add_action( 'customize_register', 'ct_mission_news_logo_refresh', 20 );
+
+//----------------------------------------------------------------------------------
+// Add dismissible Mission News Pro admin notice
+//----------------------------------------------------------------------------------
+if ( ! function_exists( ( 'ct_mission_news_pro_admin_notice' ) ) ) {
+	function ct_mission_news_pro_admin_notice() {
+		if ( function_exists( ( 'dnh_register_notice' ) ) ) {
+			dnh_register_notice( 'ct_mission_news_pro_notice', 'updated', sprintf( __( 'Mission News Pro is now available! <a href="%s" target="_blank">Click here for screenshots & videos</a>.', 'mission-news' ), 'https://www.competethemes.com/mission-news-pro/?utm_source=admin-notice&utm_medium=dashboards' ) );
+		}
+	}
+}
+add_action( 'admin_init', 'ct_mission_news_pro_admin_notice' );
+	
+//----------------------------------------------------------------------------------
+// Output styles for widget alignment
+//----------------------------------------------------------------------------------
+if ( ! function_exists( ( 'ct_mission_news_widget_styles' ) ) ) {
+	function ct_mission_news_widget_styles() {
+		$css = '';
+		$below_header 			= get_theme_mod('ct_mission_widget_styles_below_header_alignment');
+		$above_posts  			= get_theme_mod('ct_mission_widget_styles_above_posts_alignment');
+		$after_first_post 	= get_theme_mod('ct_mission_widget_styles_after_first_post_alignment');
+		$after_post_content = get_theme_mod('ct_mission_widget_styles_after_post_content_alignment');
+		$after_page_content = get_theme_mod('ct_mission_widget_styles_after_page_content_alignment');
+		$footer 						= get_theme_mod('ct_mission_widget_styles_footer_alignment');
+		
+		if ( !empty($below_header) ) {
+			$css .= ".widget-area-below-header {text-align: $below_header;}";
+		}
+		if ( !empty($above_posts) ) {
+			$css .= ".widget-area-above-main {text-align: $above_posts;}";
+		}
+		if ( !empty($after_first_post) ) {
+			$css .= ".widget-area-after-first-post {text-align: $after_first_post;}";
+		}
+		if ( !empty($after_post_content) ) {
+			$css .= ".widget-area-after-post {text-align: $after_post_content;}";
+		}
+		if ( !empty($after_page_content) ) {
+			$css .= ".widget-area-after-page {text-align: $after_page_content;}";
+		}
+		if ( !empty($footer) ) {
+			$css .= ".widget-area-site-footer {text-align: $footer;}";
+		}
+		if ( !empty( $css ) ) {
+			$css = ct_mission_news_sanitize_css($css);
+			wp_add_inline_style( 'ct-mission-news-style', $css );
+		}
+	}
+}
+add_action( 'wp_enqueue_scripts', 'ct_mission_news_widget_styles', 99 );
+
+//----------------------------------------------------------------------------------
+// Sanitize CSS
+//----------------------------------------------------------------------------------
+if ( ! function_exists( ( 'ct_mission_news_sanitize_css' ) ) ) {
+	function ct_mission_news_sanitize_css( $css ) {
+		$css = wp_kses( $css, array( '\'', '\"' ) );
+		$css = str_replace( '&gt;', '>', $css );
+
+		return $css;
+	}
+}
+
+//----------------------------------------------------------------------------------
+// Add Recent Posts Extended widgets with same settings as in the demo site and screenshot
+// Only runs upon theme activation and if both sidebars are empty
+//----------------------------------------------------------------------------------
+if ( ! function_exists( ( 'ct_mission_news_set_default_widgets' ) ) ) {
+	function ct_mission_news_set_default_widgets() {
+
+		// get active widgets in sidebars
+		$active_widgets = get_option( 'sidebars_widgets' );
+		
+		// if both sidebars are empty
+		if ( empty( $active_widgets['left'] ) && empty( $active_widgets['right'] ) ) {
+			// prepare counter
+			$counter = 1;
+			// add new instance of Recent Posts Extended to left sidebar
+			$active_widgets['left'][0] = 'ct_mission_news_post_list-' . absint($counter);
+			// set default options for the widget
+			$widget_options[$counter] = array(
+				'title' 				  => __('Latest Posts', 'mission-news'),
+				'use_category' 	  => 'yes',
+				'category'     	  => 1,
+				'use_tag' 			  => 'no',
+				'tag'          	  => 1,
+				'relationship' 	  => 'AND',
+				'author'       	  => 'yes',
+				'date'         	  => 'no',
+				'image'        	  => 'no',
+				'excerpt'     	  => 'yes',
+				'excerpt_length'  => 25,
+				'comments'     	  => 'yes',
+				'post_category'   => 'no',
+				'exclude_current' => 'no',
+				'post_count'   	 	=> 5,
+				'style'        	 	=> 1
+			);
+			// increment for next widget
+			$counter++;
+			// add new instance of Recent Posts Extended to right sidebar
+			$active_widgets['right'][0] = 'ct_mission_news_post_list-' . absint($counter);
+			// set default options for the widget
+			$widget_options[$counter] = array(
+				'title' 				 	=> __('Latest Posts', 'mission-news'),
+				'use_category' 	 	=> 'yes',
+				'category'     	 	=> 1,
+				'use_tag' 			 	=> 'no',
+				'tag'          	 	=> 1,
+				'relationship' 	 	=> 'AND',
+				'author'       	 	=> 'no',
+				'date'         	 	=> 'yes',
+				'image'        	 	=> 'yes',
+				'excerpt'     	 	=> 'no',
+				'excerpt_length' 	=> 25,
+				'comments'     	 	=> 'no',
+				'post_category'   => 'no',
+				'exclude_current' => 'no',
+				'post_count'   	 	=> 5,
+				'style'        	 	=> 2
+			);
+			// save settings for both widgets
+			update_option( 'widget_ct_mission_news_post_list', $widget_options );
+			// save widgets to sidebars
+			update_option( 'sidebars_widgets', $active_widgets );
+		}
+	}
+}
+add_action( 'after_switch_theme', 'ct_mission_news_set_default_widgets' );
+
+if ( ! function_exists( ( 'ct_mission_news_site_width_css' ) ) ) {
+	function ct_mission_news_site_width_css() {
+		$site_width = get_theme_mod( 'site_width');
+		$css = '';
+
+		if ( !empty($site_width) && $site_width != 1280 ) {
+			$css .= '.max-width { max-width: '. absint($site_width) .'px;}';	
+			$css .= '.is-sticky .site-header { max-width: '. absint($site_width) .'px !important;}';	
+		}
+		if ( !empty( $css ) ) {
+			$css = ct_mission_news_sanitize_css($css);
+			wp_add_inline_style( 'ct-mission-news-style', $css );
+		}
+	}
+}
+add_action( 'wp_enqueue_scripts', 'ct_mission_news_site_width_css', 99 );

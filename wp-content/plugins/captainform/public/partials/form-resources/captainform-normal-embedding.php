@@ -1,3 +1,4 @@
+<div id="{{ID}}"></div>
 <!--noptimize--><script type="text/javascript">
     captainformCustomVars['{{ID}}'] = '{{CUSTOMVARS}}';
     captainformThemeStyle['{{ID}}'] = '{{STYLE}}';
@@ -27,4 +28,3 @@
         });
     });
 </script><!--/noptimize-->
-<div id="{{ID}}"></div>

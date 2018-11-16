@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Polylang - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2018-01-30 10:23:01+0000\n"
+"PO-Revision-Date: 2018-07-12 19:47:46+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,13 +11,26 @@ msgstr ""
 "Language: en_GB\n"
 "Project-Id-Version: Plugins - Polylang - Stable (latest release)\n"
 
+#: include/filters.php:356
+msgid "User"
+msgstr "User"
+
+#. translators: %s is a language native name
+#: include/filters.php:347
+msgid "User description - %s"
+msgstr "User description - %s"
+
+#: include/filters.php:323
+msgid "Translated user descriptions"
+msgstr "Translated user descriptions"
+
 #: settings/flags.php:231
 msgid "Tibet"
 msgstr "Tibet"
 
-#. #-#-#-#-#  polylang-code.pot (Polylang 2.3.7)  #-#-#-#-#
+#. #-#-#-#-#  polylang-code.pot (Polylang 2.3.8)  #-#-#-#-#
 #. Plugin URI of the plugin/theme
-#. #-#-#-#-#  polylang-code.pot (Polylang 2.3.7)  #-#-#-#-#
+#. #-#-#-#-#  polylang-code.pot (Polylang 2.3.8)  #-#-#-#-#
 #. Author URI of the plugin/theme
 msgid "https://polylang.pro"
 msgstr "https://polylang.pro"
@@ -1296,7 +1309,7 @@ msgstr "Adds multilingual capability to WordPress"
 msgid "Polylang"
 msgstr "Polylang"
 
-#: lingotek/lingotek.php:268
+#: lingotek/lingotek.php:276
 msgid "Learn more..."
 msgstr "Learn more..."
 
@@ -1484,7 +1497,7 @@ msgstr "Displays flags"
 msgid "Displays language names"
 msgstr "Displays language names"
 
-#: modules/plugins/plugins-compat.php:141
+#: modules/plugins/plugins-compat.php:148
 msgid "Import <strong>posts, pages, comments, custom fields, categories, and tags</strong> from a WordPress export file."
 msgstr "Import <strong>posts, pages, comments, custom fields, categories, and tags</strong> from a WordPress export file."
 

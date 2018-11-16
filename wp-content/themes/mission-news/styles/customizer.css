@@ -21,31 +21,31 @@
   color: #fff !important;
 }
 
-#customize-control-mission_pro {
+#customize-control-mission_news_pro {
   background: white;
   border: solid 1px #DCDCDC;
   padding: 6px 24px;
   box-sizing: border-box;
 }
-#customize-control-mission_pro ul {
+#customize-control-mission_news_pro ul {
   list-style: disc;
   padding-left: 15px;
 }
-#customize-control-mission_pro img {
+#customize-control-mission_news_pro img {
   position: relative;
   max-width: calc(100% + 48px);
   top: -6px;
   left: -24px;
   border-bottom: solid 1px #DCDCDC;
 }
-#customize-control-mission_pro .bold {
+#customize-control-mission_news_pro .bold {
   font-weight: 600;
   font-size: 16px;
 }
-#customize-control-mission_pro .button-wrapper {
+#customize-control-mission_news_pro .button-wrapper {
   text-align: center;
 }
-#customize-control-mission_pro .mission-pro-button {
+#customize-control-mission_news_pro .mission-news-pro-button {
   display: inline-block;
   font-size: 12px;
   text-transform: uppercase;
@@ -58,12 +58,12 @@
   -webkit-transition: background 0.2s;
   transition: background 0.2s;
 }
-#customize-control-mission_pro .mission-pro-button:before {
+#customize-control-mission_news_pro .mission-news-pro-button:before {
   content: '\f06e';
   font-family: 'FontAwesome';
   margin-right: 6px;
 }
-#customize-control-mission_pro .mission-pro-button:hover, #customize-control-mission_pro .mission-pro-button:active, #customize-control-mission_pro .mission-pro-button:focus {
+#customize-control-mission_news_pro .mission-news-pro-button:hover, #customize-control-mission_news_pro .mission-news-pro-button:active, #customize-control-mission_news_pro .mission-news-pro-button:focus {
   background: #FF8A23;
 }
 
@@ -73,30 +73,6 @@
   border-bottom: solid 1px #d5d5d5;
 }
 
-#customize-control-layout .customize-control-title {
-  margin-bottom: 18px;
-}
-#customize-control-layout label {
-  display: inline-block;
-  margin-bottom: 12px;
-  margin-left: 0;
-  padding: 0;
-  text-align: center;
-  font-weight: 500;
-  -webkit-transition: opacity 0.2s ease;
-  transition: opacity 0.2s ease;
-}
-#customize-control-layout label img {
-  margin-top: 4px;
-}
-#customize-control-layout label.selected img {
-  outline: solid 2px #05B0E7;
-}
-
-#customize-control-layout label:hover {
-  opacity: 0.8;
-}
-
-#customize-control-layout input {
-  display: none;
+#available-widgets [class*=ct_mission_news_post_list] .widget-title:before {
+  content: "\f109";
 }

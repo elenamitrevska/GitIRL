@@ -1,7 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow');
 
 .post-title {
-  font-size: 0px;
+  font-size: 25px;
+      font-family: "PT Sans", sans-serif;
+    font-style: normal;
+}
+
+.search-form-popup .title {
+    font-size: 0em;
+    /* 38px / 16px */
+  }
+
+.search-toggle span {
+  display: none;
+  font-family: "PT Sans", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 700;
+  margin-left: 6px;
 }
 
 .widget_ct_mission_news_post_list .title:link {
@@ -145,7 +161,7 @@ body {
 .tagline {
     width: 100%;
     max-width: 400px;
-    font-size: 1em;
+    font-size: 100%;
     line-height: 1.5;
     font-style: normal;
     color: #e2e2e2;

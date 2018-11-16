@@ -8,7 +8,7 @@ if ( comments_open() ) { ?>
     <section id="comments" class="comments">
         <div class="comments-number">
             <h2>
-                <?php comments_number( __( 'Напиши Коментар', 'mission-news' ), __( 'Еден Коментар', 'mission-news' ), _x( '% Коментари', 'noun: 5 коментари', 'mission-news' ) ); ?>
+                <?php comments_number( __( 'Be First to Comment', 'mission-news' ), __( 'One Comment', 'mission-news' ), _x( '% Comments', 'noun: 5 comments', 'mission-news' ) ); ?>
             </h2>
         </div>
         <ol class="comment-list">
@@ -28,7 +28,7 @@ if ( comments_open() ) { ?>
     <section id="comments" class="comments">
         <div class="comments-number">
             <h2>
-                <?php comments_number( __( 'Напиши Коментар', 'mission-news' ), __( 'Еден Коментар', 'mission-news' ), _x( '% Коментари', 'noun: 5 коментари', 'mission-news' ) ); ?>
+                <?php comments_number( __( 'Be First to Comment', 'mission-news' ), __( 'One Comment', 'mission-news' ), _x( '% Comments', 'noun: 5 comments', 'mission-news' ) ); ?>
             </h2>
         </div>
         <ol class="comment-list">
@@ -53,7 +53,7 @@ if ( comments_open() ) { ?>
     <section id="comments" class="comments">
         <div class="comments-number">
             <h2>
-                <?php comments_number( __( 'Напиши Коментар', 'mission-news' ), __( 'Еден Коментар', 'mission-news' ), _x( '% Коментари', 'noun: 5 коментари', 'mission-news' ) ); ?>
+                <?php comments_number( __( 'Be First to Comment', 'mission-news' ), __( 'One Comment', 'mission-news' ), _x( '% Comments', 'noun: 5 comments', 'mission-news' ) ); ?>
             </h2>
         </div>
         <ol class="comment-list">
@@ -67,14 +67,23 @@ if ( comments_open() ) { ?>
             </nav>
         <?php } ?>
         <p class="comments-closed">
-            <?php esc_html_e( 'Коментарите се затворени.', 'mission-news' ); ?>
+            <?php esc_html_e( 'Comments are closed.', 'mission-news' ); ?>
         </p>
     </section>
     <?php
-} else { ?>
-    <section id="comments" class="comments">
-        <p class="comments-closed">
-            <?php esc_html_e( 'Коментарите се затворени.', 'mission-news' ); ?>
-        </p>
-    </section>
-<?php }
+} else { 
+    $output = true;
+	// don't output on WooCommerce pages like Cart and Checkout
+	if ( function_exists( 'is_woocommerce' ) ) {
+		if ( is_cart() || is_checkout() || is_account_page() ) {
+			$output = false;
+		}
+	}
+	if ( $output ) { ?>
+        <section id="comments" class="comments">
+            <p class="comments-closed">
+                <?php esc_html_e( 'Comments are closed.', 'mission-news' ); ?>
+            </p>
+        </section>
+    <?php }
+}
